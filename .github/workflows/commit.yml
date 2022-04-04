@@ -1,0 +1,28 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  '38 5 * * *'
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: save current date
+        run: |
+          # do some operation that changes a file in the git repo
+          date > time.txt
+
+      - name: setup git config
+        run: |
+          git config user.name "WallOfGreen"
+          git config user.email "<>"
+
+      - name: commit
+        run: |
+          # Stage the file, commit and push
+          git add time.txt
+          git commit -m "commit a day"
+          git push origin main
